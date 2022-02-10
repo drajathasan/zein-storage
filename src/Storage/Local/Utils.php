@@ -31,4 +31,37 @@ trait Utils
 
         return false;
     }
+
+    /**
+     * Bypass chaning method
+     */
+    public function nextIfError()
+    {
+        return !empty($this->Error);  
+    }
+
+    /**
+     * Convert filesize to byte
+     * 
+     * @param string $Format
+     */
+    public function toByteSize(string $Format) {
+        $Unitmap = ['B'=> 0, 'KB'=> 1, 'MB'=> 2, 'GB'=> 3, 'TB'=> 4, 'PB'=> 5, 'EB'=> 6, 'ZB'=> 7, 'YB'=> 8];
+        $InjectUnit = strtoupper(trim(substr($Format, -2)));
+
+        if (intval($InjectUnit) !== 0) {
+            $InjectUnit = 'B';
+        }
+
+        if (!in_array($InjectUnit, array_keys($Unitmap))) {
+            return false;
+        }
+
+        $intervalUnits = trim(substr($Format, 0, strlen($Format) - 2));
+        if (!intval($intervalUnits) == $intervalUnits) {
+            return false;
+        }
+
+        return $intervalUnits * 1024;
+    }
 }

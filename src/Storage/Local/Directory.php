@@ -28,7 +28,7 @@ class Directory
     /**
      * Error Message
      */
-    private $Error;
+    protected $Error;
 
     /**
      * Directory scope
@@ -52,7 +52,7 @@ class Directory
      * @param string $directoryName
      * @return Filesystem
      */
-    private function getFileSystem(string $directoryName)
+    protected function getFileSystem(string $directoryName)
     {
         // Check the local adapter
         if (is_null($this->{$directoryName})) die('Adapter ' . $directoryName . ' is not available!' . PHP_EOL);
