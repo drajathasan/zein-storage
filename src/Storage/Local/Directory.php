@@ -28,7 +28,7 @@ class Directory
     /**
      * Error Message
      */
-    protected $Error;
+    protected $Error = '';
 
     /**
      * Directory scope

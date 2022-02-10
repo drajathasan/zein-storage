@@ -33,21 +33,16 @@ trait Utils
     }
 
     /**
-     * Bypass chaning method
-     */
-    public function nextIfError()
-    {
-        return !empty($this->Error);  
-    }
-
-    /**
      * Convert filesize to byte
      * 
      * @param string $Format
      */
-    public function toByteSize(string $Format) {
-        $Unitmap = ['B'=> 0, 'KB'=> 1, 'MB'=> 2, 'GB'=> 3, 'TB'=> 4, 'PB'=> 5, 'EB'=> 6, 'ZB'=> 7, 'YB'=> 8];
-        $InjectUnit = strtoupper(trim(substr($Format, -2)));
+    public function toByteSize(string $NumberLimit) 
+    {
+        $NumberLimit = str_replace(',', '.', $NumberLimit);
+        $Unitmap = ['B'=> 0, 'KB'=> 3, 'MB'=> 6, 'GB'=> 9, 'TB'=> 12, 'PB'=> 15, 'EB'=> 18, 'ZB'=> 21, 'YB'=> 24];
+        $InjectUnit = strtoupper(trim(substr($NumberLimit, -2)));
+        $Number = trim(str_replace($InjectUnit, '', $NumberLimit));
 
         if (intval($InjectUnit) !== 0) {
             $InjectUnit = 'B';
@@ -57,11 +52,7 @@ trait Utils
             return false;
         }
 
-        $intervalUnits = trim(substr($Format, 0, strlen($Format) - 2));
-        if (!intval($intervalUnits) == $intervalUnits) {
-            return false;
-        }
-
-        return $intervalUnits * 1024;
+        $inByte = $Number * ('1' . str_repeat(0,$Unitmap[$InjectUnit]));
+        return $inByte;
     }
 }

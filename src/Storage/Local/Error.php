@@ -13,7 +13,7 @@ namespace Zein\Storage\Local;
 trait Error
 {
     /**
-     * Getter for Error poperty
+     * Getter for Error property
      * 
      * @return string
      */
@@ -21,5 +21,27 @@ trait Error
     {
         return $this->Error;
     }
+
+    /**
+     * Setter for Error property
+     *
+     * @param string $Error
+     * @return Upload
+     */
+    private function setError($Error)
+    {
+        $this->Error = $Error;
+
+        return $this;
+    }
+
+    /**
+     * Bypass chaning method
+     */
+    public function nextIfError()
+    {
+        return !empty($this->Error);  
+    }
+
 }
 

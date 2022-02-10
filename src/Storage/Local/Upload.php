@@ -14,7 +14,7 @@ use Exception;
 
 class Upload extends Directory
 {
-    use Utils,UploadGuard;
+    use Utils,UploadGuard,Error;
 
     /**
      * Attribute
@@ -35,7 +35,7 @@ class Upload extends Directory
     public function streamFrom(string $FileName, string $Mode = 'r+')
     {
         try {
-            if (!$this->streamExists($FileName))
+            if (!$this->isStreamExists($FileName))
             {
                 throw new Exception("$FileName is not set!");
             }
@@ -44,9 +44,11 @@ class Upload extends Directory
                 $this->Attribute['Files'] = $_FILES[$FileName];
                 $this->Attribute['Stream'] = fopen($_FILES[$FileName]['tmp_name'], $Mode);
                 $this->Attribute['Name'] = $_FILES[$FileName]['name'];
+
+                if ($this->isZeroSize()) throw new Exception("File size is less than 1 byte!");
             }
         } catch (Exception $e) {
-            $this->Error = $e->getMessage();
+            $this->Error .= $e->getMessage();
         }
 
         return $this;
@@ -75,7 +77,7 @@ class Upload extends Directory
                 ->writeStream($this->Attribute['Path'] . $this->Attribute['Name'], $this->Attribute['Stream']);
 
         } catch (FilesystemException | UnableToWriteFile $e) {
-            $this->Error = $e->getMessage();
+            $this->Error .= $e->getMessage();
         }
 
         $this->close();
