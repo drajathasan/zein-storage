@@ -55,4 +55,14 @@ trait Utils
         $inByte = $Number * ('1' . str_repeat(0,$Unitmap[$InjectUnit]));
         return $inByte;
     }
+
+    /**
+     * Get attribute
+     * 
+     * @return array
+     */
+    public function getAttribute()
+    {
+        return $this->Attribute;
+    }
 }
