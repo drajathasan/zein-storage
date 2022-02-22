@@ -63,6 +63,7 @@ trait Utils
      */
     public function getAttribute()
     {
+        unset($this->Attribute['Stream']);
         return $this->Attribute;
     }
 }
