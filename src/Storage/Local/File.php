@@ -59,3 +59,4 @@ class File
 
         return empty($Error);
     }
+}
