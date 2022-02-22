@@ -50,14 +50,12 @@ class File
      */
     public static function exists(string $Filepath, $callBack = '')
     {
-        $Static = new static;
-        if (!file_exists($Filepath)) $Static->Error = 'File ' . $Filepath . ' not found!';
+        if (!file_exists($Filepath)) $Error = 'File ' . $Filepath . ' not found!';
 
         if (is_callable($callBack))
         {
-            return $callBack($Static, $Static->Error);
+            return $callBack($Error);
         }
 
-        return $Static->nextIfError();
+        return empty($Error);
     }
-}
